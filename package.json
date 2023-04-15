@@ -1,0 +1,31 @@
+{
+  "name": "shopping",
+  "version": "1.0.0",
+  "description": "\"Shopping market with products and a cart examples\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinibleik/dog_shop.git"
+  },
+  "keywords": [
+    "shop",
+    "market",
+    "cart",
+    "dogs",
+    "products"
+  ],
+  "author": "Vinicius de Carvalho Baggio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinibleik/dog_shop/issues"
+  },
+  "homepage": "https://github.com/vinibleik/dog_shop#readme",
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "webpack": "^5.79.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
