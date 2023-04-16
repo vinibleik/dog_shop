@@ -3,6 +3,32 @@
  * https://jestjs.io/docs/configuration
  */
 
+// export default {
+//     transform: {},
+//     moduleNameMapper: {
+//       '^/(.*)$': '<rootDir>/$1'
+//     },
+//     testMatch: [
+//       '**/*.test.js'
+//     ],
+//     moduleFileExtensions: [
+//       'js'
+//     ],
+//     globals: {
+//       'ts-jest': {
+//         babelConfig: true
+//       }
+//     }
+//   };
+
+/**
+ *  This configuration sets the transform option to an empty object, which tells Jest to use Babel to transform ES6 modules by default. It also sets up a moduleNameMapper to map module paths to their actual locations, and specifies that Jest should only run files that match the testMatch pattern.
+
+Finally, it sets the moduleFileExtensions option to include js, and specifies that the babelConfig option should be set to true to use Babel with the default configuration.
+
+With these configuration options, Jest should be able to correctly import and run tests for ES6 modules.
+ */
+
 module.exports = {
     // All imported modules in your tests should be mocked automatically
     // automock: false,
@@ -63,7 +89,11 @@ module.exports = {
     // globalTeardown: undefined,
 
     // A set of global variables that need to be available in all test environments
-    // globals: {},
+    globals: {
+        "ts-jest": {
+            babelConfig: true,
+        },
+    },
 
     // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
     // maxWorkers: "50%",
@@ -75,7 +105,7 @@ module.exports = {
     moduleFileExtensions: ["js"],
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-    // moduleNameMapper: {},
+    moduleNameMapper: { "^/(.*)$": "<rootDir>/$1" },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
     // modulePathIgnorePatterns: [],
@@ -138,7 +168,7 @@ module.exports = {
     // testLocationInResults: false,
 
     // The glob patterns Jest uses to detect test files
-    testMatch: ["**.test.js"],
+    testMatch: ["**/*.test.js"],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
     testPathIgnorePatterns: ["/node_modules/", "/coverage/", "/scripts/"],
@@ -153,7 +183,10 @@ module.exports = {
     // testRunner: "jest-circus/runner",
 
     // A map from regular expressions to paths to transformers
-    // transform: undefined,
+    // This tells Jest to use the babel-jest transformer to transpile any JavaScript files that it encounters during testing.
+    transform: {
+        "^.+\\.js$": "babel-jest",
+    },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
     // transformIgnorePatterns: [
