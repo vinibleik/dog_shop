@@ -20,7 +20,7 @@ describe("Product", () => {
         });
     });
 
-    describe("#seachId", () => {
+    describe("seachId()", () => {
         test("Should return the right products", () => {
             expect(Product.searchId(0)).toEqual(full_product);
             expect(Product.searchId(1)).toEqual(img_missing);
@@ -36,6 +36,16 @@ describe("Product", () => {
             expect(() => {
                 Product.searchId("test");
             }).toThrow(TypeError);
+        });
+    });
+
+    describe("getProductList()", () => {
+        test("Should return the two Products created", () => {
+            const productsList = Product.getProductList();
+
+            expect(productsList.length).toEqual(2);
+            expect(productsList[0]).toEqual(full_product);
+            expect(productsList[1]).toEqual(img_missing);
         });
     });
 });
