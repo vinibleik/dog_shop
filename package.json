@@ -4,7 +4,8 @@
     "description": "\"Shopping market with products and a cart examples\"",
     "main": "index.js",
     "scripts": {
-        "test": "jest"
+        "test": "jest",
+        "build": "npx webpack --mode production"
     },
     "repository": {
         "type": "git",

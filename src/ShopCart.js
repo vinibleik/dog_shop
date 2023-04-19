@@ -1,4 +1,4 @@
-import { Product } from "./Product";
+import { Product, getNewProduct } from "./Product";
 
 export class ShopCart {
     constructor() {

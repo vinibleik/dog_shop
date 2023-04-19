@@ -1,4 +1,4 @@
-import { Product } from "../src/Product";
+import { Product, getNewProduct } from "../src/Product";
 
 describe("Product", () => {
     const name = "Teste product";
@@ -47,5 +47,12 @@ describe("Product", () => {
             expect(productsList[0]).toEqual(full_product);
             expect(productsList[1]).toEqual(img_missing);
         });
+    });
+});
+
+describe("getNewProduct", () => {
+    test("Should return an Product with a random image", async () => {
+        const product = await getNewProduct();
+        expect(product.img).not.toEqual("");
     });
 });
