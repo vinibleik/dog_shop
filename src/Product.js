@@ -63,8 +63,8 @@ async function getApiProduct() {
 }
 
 /**
- *
- * @returns {Product}
+ *  Returns a new Product that fetch data by API. Returns null if any errors occurs
+ * @returns {Product | null}
  */
 export async function getNewProduct() {
     const img = await getApiProduct();
