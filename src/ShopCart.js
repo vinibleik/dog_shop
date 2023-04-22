@@ -1,4 +1,4 @@
-import { Product, getNewProduct } from "./Product";
+import { Product } from "./Product";
 
 export class ShopCart {
     constructor() {
@@ -68,12 +68,10 @@ export class ShopCart {
 
     decreaseProduct(productId) {
         const product = this.constructor.#getProduct(productId);
+        const id = this.#findProduct(productId);
+        if (id === null) return;
 
         this.#updateTotal(-product.price);
-
-        const id = this.#findProduct(productId);
-
-        if (id === null) return;
 
         this.productsList[id].count--;
 

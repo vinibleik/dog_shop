@@ -10,161 +10,90 @@
             integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
             crossorigin="anonymous"
         />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
         <title>Shop</title>
     </head>
     <body class="m-0 border-0 p-0">
+        <div
+            class="offcanvas offcanvas-end"
+            tabindex="-1"
+            id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel"
+        >
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">
+                    Offcanvas right
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="offcanvas-body shop-body">
+                <ol class="list-group list-group-numbered">
+                    <li
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                        <div class="ms-2 me-auto">nome</div>
+                        <div class="ms-2 me-auto">quantidade</div>
+                        <div class="ms-2 me-auto">
+                            <button
+                                type="button"
+                                class="btn-close"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                    </li>
+                    <li
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                        <div class="ms-2 me-auto">nome</div>
+                        <div class="ms-2 me-auto">quantidade</div>
+                        <div class="ms-2 me-auto">
+                            <button
+                                type="button"
+                                class="btn-close"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                    </li>
+                    <li
+                        class="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                        <div class="ms-2 me-auto">nome</div>
+                        <div class="ms-2 me-auto">quantidade</div>
+                        <div class="ms-2 me-auto">
+                            <button
+                                type="button"
+                                class="btn-close"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                    </li>
+                </ol>
+                <div class="ms-2 me-auto">Total:</div>
+            </div>
+        </div>
         <div class="container-md text-center border border-3 border-danger g-3">
             <div class="row justify-content-end">
-                <div class="col col-4 border-black border-2 border">total</div>
-            </div>
-            <div class="container-fluid p-0 m-0 border-0 content">
-                <!-- <div class="row g-2 my-2">
-                    <div class="col-4 border border-3 border-danger p-0">
-                        <img
-                            src="https://images.dog.ceo/breeds/dane-great/n02109047_13072.jpg"
-                            loading="lazy"
-                            width="200"
-                            height="200"
-                        />
-                        <div class="container">
-                            <div class="row p-0 m-0">
-                                <div class="col border p-0 m-0 text-center">
-                                    <span class="border border-black m-0 p-1"
-                                        >product name</span
-                                    >
-                                </div>
-                                <div class="col border p-0 m-0">
-                                    <span class="price">R$1234.4</span>
-                                    <button class="plus">+</button>
-                                    <button class="minus">-</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 border border-3 border-danger p-0">
-                        <img
-                            src="https://images.dog.ceo/breeds/dane-great/n02109047_13072.jpg"
-                            loading="lazy"
-                            width="200"
-                            height="200"
-                        />
-                        <div class="container">
-                            <div class="row p-0 m-0">
-                                <div class="col border p-0 m-0">
-                                    <span
-                                        class="d-flex border border-black m-0 p-1"
-                                        >vini</span
-                                    >
-                                </div>
-                                <div
-                                    class="col border p-0 m-0 align-content-end align-items-end justify-content-end"
-                                >
-                                    <button class="">+</button>
-                                    <button class="">-</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 border border-3 border-danger p-0">
-                        <img
-                            src="https://images.dog.ceo/breeds/dane-great/n02109047_13072.jpg"
-                            loading="lazy"
-                            width="200"
-                            height="200"
-                        />
-                        <div class="container">
-                            <div class="row p-0 m-0">
-                                <div class="col border p-0 m-0">
-                                    <span
-                                        class="d-flex border border-black m-0 p-1"
-                                        >vini</span
-                                    >
-                                </div>
-                                <div
-                                    class="col border p-0 m-0 align-content-end align-items-end justify-content-end"
-                                >
-                                    <button class="">+</button>
-                                    <button class="">-</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div
+                    class="col col-4 border-black border-2 border d-flex justify-content-evenly"
+                >
+                    <span class="d-inline-flex" id="total-price">total</span>
+                    <button
+                        class="btn btn-primary d-inline-flex"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight"
+                        aria-controls="offcanvasRight"
+                    >
+                        Carrinho
+                    </button>
                 </div>
-                <div class="row gx-2 my-2">
-                    <div class="col-4 border border-3 border-danger p-0">
-                        <img
-                            src="https://images.dog.ceo/breeds/dane-great/n02109047_13072.jpg"
-                            loading="lazy"
-                            width="200"
-                            height="200"
-                        />
-                        <div class="container">
-                            <div class="row p-0 m-0">
-                                <div class="col border p-0 m-0">
-                                    <span
-                                        class="d-flex border border-black m-0 p-1"
-                                        >vini</span
-                                    >
-                                </div>
-                                <div
-                                    class="col border p-0 m-0 align-content-end align-items-end justify-content-end"
-                                >
-                                    <button class="">+</button>
-                                    <button class="">-</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 border border-3 border-danger p-0">
-                        <img
-                            src="https://images.dog.ceo/breeds/dane-great/n02109047_13072.jpg"
-                            loading="lazy"
-                            width="200"
-                            height="200"
-                        />
-                        <div class="container">
-                            <div class="row p-0 m-0">
-                                <div class="col border p-0 m-0">
-                                    <span
-                                        class="d-flex border border-black m-0 p-1"
-                                        >vini</span
-                                    >
-                                </div>
-                                <div
-                                    class="col border p-0 m-0 align-content-end align-items-end justify-content-end"
-                                >
-                                    <button class="">+</button>
-                                    <button class="">-</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 border border-3 border-danger p-0">
-                        <img
-                            src="https://images.dog.ceo/breeds/dane-great/n02109047_13072.jpg"
-                            loading="lazy"
-                            width="200"
-                            height="200"
-                        />
-                        <div class="container">
-                            <div class="row p-0 m-0">
-                                <div class="col border p-0 m-0">
-                                    <span
-                                        class="d-flex border border-black m-0 p-1"
-                                        >vini</span
-                                    >
-                                </div>
-                                <div
-                                    class="col border p-0 m-0 align-content-end align-items-end justify-content-end"
-                                >
-                                    <button class="">+</button>
-                                    <button class="">-</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-                </div> -->
             </div>
+            <div class="container-fluid p-0 m-0 border-0 content"></div>
         </div>
         <script src="dist/bundle.js"></script>
     </body>

@@ -2,6 +2,8 @@ import { Product, getNewProduct } from "./Product";
 import { ShopCart } from "./ShopCart";
 
 const content = document.querySelector(".content");
+const shopBody = document.querySelector(".shop-body");
+let shopCart = new ShopCart();
 
 // --------------------- PRODUCT'S IMG --------------------------//
 
@@ -19,11 +21,26 @@ function newImgElement(src) {
     img.width = IMG_WIDTH;
     img.height = IMG_HEIGHT;
     img.loading = "lazy";
+    img.classList.add("product-img");
     return img;
 }
 // --------------------- PRODUCT'S IMG --------------------------//
 
 // ---------------- PRODUCTS NAME ----------------------------//
+
+/**
+ * Construct a new span that hold the product's id
+ * @param {string} productId
+ * @returns {HTMLSpanElement}
+ */
+function newSpanId(productId) {
+    const spanId = document.createElement("span");
+    spanId.classList.add("product-id");
+    spanId.textContent = productId;
+    spanId.style.display = "none";
+    return spanId;
+}
+
 /**
  * Constructs a new span element that hold the product's name
  * @param {string} productName
@@ -32,21 +49,30 @@ function newImgElement(src) {
 function newSpanName(productName) {
     const spanName = document.createElement("span");
     spanName.textContent = productName;
-    spanName.classList.add("m-0", "p-1");
+    spanName.classList.add("m-0", "p-1", "product-name");
     return spanName;
 }
 
-const COL_PRODUCT_NAME_CLASSES = ["col", "p-0", "m-0", "text-center"];
+const COL_PRODUCT_NAME_CLASSES = [
+    "col",
+    "p-0",
+    "m-0",
+    "text-center",
+    "product-name-container",
+];
 
 /**
  * Constructs a new div element that holds the product's name
+ * @param {string} productId
  * @param {string} productName
  * @returns {HTMLDivElement}
  */
-function newProductName(productName) {
+function newProductName(productId, productName) {
     const spanName = newSpanName(productName);
+    const spanId = newSpanId(productId);
     const colName = document.createElement("div");
     colName.classList.add(...COL_PRODUCT_NAME_CLASSES);
+    colName.appendChild(spanId);
     colName.appendChild(spanName);
     return colName;
 }
@@ -62,7 +88,7 @@ function newProductName(productName) {
 function newSpanPrice(productPrice) {
     const spanPrice = document.createElement("span");
     spanPrice.textContent = productPrice;
-    spanPrice.classList.add("price");
+    spanPrice.classList.add("product-price");
     return spanPrice;
 }
 
@@ -77,7 +103,12 @@ function newButton(buttonText) {
     return button;
 }
 
-const COL_PRODUCT_PRICE_CLASSES = ["col", "p-0", "m-0"];
+const COL_PRODUCT_PRICE_CLASSES = [
+    "col",
+    "p-0",
+    "m-0",
+    "product-price-container",
+];
 
 /**
  * Constructs a new div element that holds the product's price and buttons
@@ -102,16 +133,17 @@ function newProductPrice(productPrice) {
 
 // ---------------- PRODUCTS INFO ----------------------------//
 
-const ROW_INFO_CLASSES = ["row", "m-0", "p-0"];
+const ROW_INFO_CLASSES = ["row", "m-0", "p-0", "row-product-info"];
 
 /**
  * Construct the container that holds the product's info
+ * @param {string} productId
  * @param {string} productName
  * @param {string} productPrice
  * @returns {HTMLDivElement}
  */
-function newProductInfo(productName, productPrice) {
-    const nameContainer = newProductName(productName);
+function newProductInfo(productId, productName, productPrice) {
+    const nameContainer = newProductName(productId, productName);
     const priceContainer = newProductPrice(productPrice);
     const row = document.createElement("div");
     row.classList.add(...ROW_INFO_CLASSES);
@@ -126,7 +158,7 @@ function newProductInfo(productName, productPrice) {
 
 // --------------- PRODUCTS CONTAINER ------------------------//
 
-const PRODUCT_CONTAINER_CLASSES = ["col-4", "p-0"];
+const PRODUCT_CONTAINER_CLASSES = ["col-4", "p-0", "product-container"];
 
 /**
  * Returns a new products container with all its information
@@ -135,9 +167,9 @@ const PRODUCT_CONTAINER_CLASSES = ["col-4", "p-0"];
  * @param {string} productPrice
  * @returns {HTMLDivElement}
  */
-function newProductContainer(src, productName, productPrice) {
+function newProductContainer(src, productId, productName, productPrice) {
     const img = newImgElement(src);
-    const info = newProductInfo(productName, productPrice);
+    const info = newProductInfo(productId, productName, productPrice);
     const container = document.createElement("div");
     container.classList.add(...PRODUCT_CONTAINER_CLASSES);
     container.appendChild(img);
@@ -148,7 +180,7 @@ function newProductContainer(src, productName, productPrice) {
 
 // ---------------- PRODUCTS ROW ----------------------------//
 
-const ROW_PRODUCT_CLASSES = ["row", "g-2", "my-2"];
+const ROW_PRODUCT_CLASSES = ["row", "g-2", "my-2", "row-products"];
 
 /**
  * Returns a new row that can contains at most 3 products container
@@ -161,7 +193,10 @@ function newProductRow() {
 }
 // ---------------- PRODUCTS ROW ----------------------------//
 
-async function teste(nRows) {
+// ---------------- ADDING PRODUCTS -------------------------//
+const NROWS = 3;
+
+async function addProducts(nRows) {
     for (let i = 0; i < nRows; i++) {
         let row = newProductRow();
         for (let j = 0; j < 3; j++) {
@@ -169,6 +204,7 @@ async function teste(nRows) {
             if (product === null) return;
             let productContainer = newProductContainer(
                 product.img,
+                product.id,
                 product.name,
                 product.price.toString()
             );
@@ -176,6 +212,33 @@ async function teste(nRows) {
         }
         content.appendChild(row);
     }
+    addEventButtons();
 }
 
-teste(3).catch((error) => console.error(error));
+addProducts(NROWS).catch((error) => console.error(error));
+// ---------------- ADDING PRODUCTS -------------------------//
+
+function addEventButtons() {
+    const rowsProductsInfo = document.querySelectorAll(".row-product-info");
+
+    rowsProductsInfo.forEach((row) => {
+        let plus = row.querySelector(".plus");
+        let minus = row.querySelector(".minus");
+        let productId = row.querySelector(".product-id");
+        let id = parseInt(productId.textContent);
+
+        plus.addEventListener("click", () => {
+            shopCart.addProduct(id);
+            console.log(shopCart.productsList);
+            console.log(shopCart.total);
+        });
+
+        minus.addEventListener("click", () => {
+            shopCart.decreaseProduct(id);
+            console.log(shopCart.productsList);
+            console.log(shopCart.total);
+        });
+    });
+}
+
+// --------------- -------------------------//
