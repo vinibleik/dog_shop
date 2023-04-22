@@ -2,7 +2,9 @@ import { Product, getNewProduct } from "./Product";
 import { ShopCart } from "./ShopCart";
 
 const content = document.querySelector(".content");
-const shopBody = document.querySelector(".shop-body");
+const shopItems = document.querySelector(".shop-items");
+const shopTotal = document.querySelector(".shop-total");
+const totalPrice = document.querySelector("#total-price");
 let shopCart = new ShopCart();
 
 // --------------------- PRODUCT'S IMG --------------------------//
@@ -218,6 +220,88 @@ async function addProducts(nRows) {
 addProducts(NROWS).catch((error) => console.error(error));
 // ---------------- ADDING PRODUCTS -------------------------//
 
+// ---------------- SHOW SHOP CART  -------------------------//
+
+const DIV_ITEM_COMMON_CLASSES = ["ms-2", "me-auto", "col-2"];
+
+/**
+ * Returns a new div item element
+ * @param {string} [text=""]
+ * @returns {HTMLDivElement}
+ */
+function newDivItem(text = "") {
+    const divItem = document.createElement("div");
+    divItem.classList.add(...DIV_ITEM_COMMON_CLASSES);
+    divItem.textContent = text;
+    return divItem;
+}
+
+const BUTTON_ITEM_CLASSES = ["btn-close", "delete-item"];
+
+/**
+ * Returns a new div item element with the close button
+ * @returns {HTMLDivElement}
+ */
+function newDivButtonItem(productId) {
+    const divButton = newDivItem();
+    const button = document.createElement("button");
+    button.type = "button";
+    button.classList.add(...BUTTON_ITEM_CLASSES);
+    button.ariaLabel = "Close";
+    button.addEventListener("click", () => {
+        shopCart.deleteProduct(productId);
+        updateShopCart();
+    });
+    divButton.appendChild(button);
+    return divButton;
+}
+
+const SHOP_ITEM_CLASSES = [
+    "list-group-item",
+    "d-flex",
+    "justify-content-between",
+    "align-items-center",
+];
+
+/**
+ * Returns a new item for the list of the products
+ * @param {number} productId
+ * @param {string} productName
+ * @param {string} productCount
+ * @returns {HTMLLIElement}
+ */
+function newShopItem(productId, productName, productCount) {
+    const divName = newDivItem(productName);
+    divName.classList.remove("col-2");
+    divName.classList.add("col-8");
+    const divCount = newDivItem(productCount);
+    const divButton = newDivButtonItem(productId);
+    const item = document.createElement("li");
+    item.classList.add(...SHOP_ITEM_CLASSES);
+    item.appendChild(divName);
+    item.appendChild(divCount);
+    item.appendChild(divButton);
+    return item;
+}
+
+function updateShopCart() {
+    shopItems.innerHTML = "";
+    shopCart.productsList.forEach((item) => {
+        let newItem = newShopItem(
+            item.product.id,
+            item.product.name,
+            item.count
+        );
+        shopItems.appendChild(newItem);
+    });
+    shopTotal.textContent = "Total: R$" + shopCart.total;
+    totalPrice.textContent = "Total: R$" + shopCart.total;
+}
+
+// ---------------- SHOW SHOP CART  -------------------------//
+
+// ---------------- EVENTS BUTTONS --------------------------//
+
 function addEventButtons() {
     const rowsProductsInfo = document.querySelectorAll(".row-product-info");
 
@@ -229,16 +313,13 @@ function addEventButtons() {
 
         plus.addEventListener("click", () => {
             shopCart.addProduct(id);
-            console.log(shopCart.productsList);
-            console.log(shopCart.total);
+            updateShopCart();
         });
 
         minus.addEventListener("click", () => {
             shopCart.decreaseProduct(id);
-            console.log(shopCart.productsList);
-            console.log(shopCart.total);
+            updateShopCart();
         });
     });
 }
-
-// --------------- -------------------------//
+// ---------------- EVENTS BUTTONS --------------------------//
