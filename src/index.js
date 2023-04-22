@@ -236,20 +236,66 @@ function newDivItem(text = "") {
     return divItem;
 }
 
-const BUTTON_ITEM_CLASSES = ["btn-close", "delete-item"];
+const CLOSE_BUTTON_ITEM_CLASSES = ["btn-close", "delete-item", "btn-danger"];
 
 /**
  * Returns a new div item element with the close button
  * @returns {HTMLDivElement}
  */
-function newDivButtonItem(productId) {
+function newDivCloseButtonItem(productId) {
     const divButton = newDivItem();
     const button = document.createElement("button");
     button.type = "button";
-    button.classList.add(...BUTTON_ITEM_CLASSES);
+    button.classList.add(...CLOSE_BUTTON_ITEM_CLASSES);
     button.ariaLabel = "Close";
     button.addEventListener("click", () => {
         shopCart.deleteProduct(productId);
+        updateShopCart();
+    });
+    divButton.appendChild(button);
+    return divButton;
+}
+
+const PLUS_BUTTON_ITEM_CLASSES = ["btn", "plus-item", "btn-success", "btn-sm"];
+
+/**
+ * Returns a new div item element with the plus button
+ * @returns {HTMLDivElement}
+ */
+function newDivAddButtonItem(productId) {
+    const divButton = newDivItem();
+    divButton.classList.remove("col-2");
+    divButton.classList.add("col-1");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.classList.add(...PLUS_BUTTON_ITEM_CLASSES);
+    button.ariaLabel = "Add";
+    button.textContent = "+";
+    button.addEventListener("click", () => {
+        shopCart.addProduct(productId);
+        updateShopCart();
+    });
+    divButton.appendChild(button);
+    return divButton;
+}
+
+const MINUS_BUTTON_ITEM_CLASSES = ["btn", "plus-item", "btn-warning", "btn-sm"];
+
+/**
+ * Returns a new div item element with the close button
+ * @returns {HTMLDivElement}
+ */
+function newDivMinusButtonItem(productId) {
+    const divButton = newDivItem();
+    divButton.classList.remove("col-2");
+    divButton.classList.add("col-1");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.classList.add(...MINUS_BUTTON_ITEM_CLASSES);
+    button.ariaLabel = "Minus";
+    button.textContent = "-";
+    button.addEventListener("click", () => {
+        shopCart.decreaseProduct(productId);
         updateShopCart();
     });
     divButton.appendChild(button);
@@ -273,14 +319,18 @@ const SHOP_ITEM_CLASSES = [
 function newShopItem(productId, productName, productCount) {
     const divName = newDivItem(productName);
     divName.classList.remove("col-2");
-    divName.classList.add("col-8");
+    divName.classList.add("col-5");
     const divCount = newDivItem(productCount);
-    const divButton = newDivButtonItem(productId);
+    const divCloseButton = newDivCloseButtonItem(productId);
+    const divPlusButton = newDivAddButtonItem(productId);
+    const divMinusButton = newDivMinusButtonItem(productId);
     const item = document.createElement("li");
     item.classList.add(...SHOP_ITEM_CLASSES);
     item.appendChild(divName);
     item.appendChild(divCount);
-    item.appendChild(divButton);
+    item.appendChild(divPlusButton);
+    item.appendChild(divMinusButton);
+    item.appendChild(divCloseButton);
     return item;
 }
 
